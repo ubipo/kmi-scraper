@@ -49,6 +49,9 @@ def cdn2cdf(cdn: str):
 def txt2f(txt: str):
   return float(txt.replace(',', '.'))
 
+def vkh2vkn(vkh: float):
+  return vkh * 0.539956803
+
 
 res = requests.get(sys.argv[1])
 if res.status_code != 200:
@@ -83,12 +86,13 @@ for row in rows[2:]:
   if (colTxt[2] != '-'):
     rowData["rh"] = int(colTxt[2])
   if (colTxt[3] != '-'):
-    rowData["pa"] = txt2f(colTxt[3])
+    rowData["p"] = txt2f(colTxt[3])
   if (colTxt[4] != '-'):
-    rowData["cdn"] = colTxt[4]
-    rowData["cdf"] = round(cdn2cdf(colTxt[4]), 3)
+    rowData["wcdn"] = colTxt[4]
+    rowData["wcdf"] = round(cdn2cdf(colTxt[4]), 3)
   if (colTxt[5] != '-'):
-    rowData["vkh"] = txt2f(colTxt[5])
+    rowData["wvkh"] = txt2f(colTxt[5])
+    rowData["wvkn"] = round(vkh2vkn(txt2f(colTxt[5])), 3)
   if (colTxt[6] != '-'):
     rowData["desc"] = colTxt[6]
     estCond = weatherTypeLookup[colTxt[6]]
